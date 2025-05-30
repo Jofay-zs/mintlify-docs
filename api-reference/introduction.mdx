@@ -1,33 +1,22 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "Introduction"
+description: "Welcome to the Loopay API documentation. This API enables developers to integrate seamlessly with Loopay services and centralize all treasury processes for their business."
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Prerequisites
 
-## Welcome
+Loopay provides two environments for your integration:
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+**Environment for development and testing:**
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+- Dashboard URL: `demo.loopay.com`
+- API Base URL: `https://api.loopay.com`
+
+**Production Environment:**
+
+- Dashboard URL: `app.loopay.com`
+- API Base URL: `https://v1.api.loopay.com`
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+To access the API, authenticate by calling the `/login` endpoint with your Loopay platform credentials (email and password). A token will be returned, which must be included in subsequent requests to other endpoints.
