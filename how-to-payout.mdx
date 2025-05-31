@@ -1,0 +1,97 @@
+---
+title: "How to create a payout via API"
+description: ""
+---
+
+# Loopay API Documentation
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Understanding Key Concepts](#understanding-key-concepts)
+- [Authentication](#authentication)
+- [Setting Up Your Balance](#setting-up-your-balance)
+- [API Endpoints Reference](#api-endpoints-reference)
+- [Payout Creation Workflow](#payout-creation-workflow)
+- [Testing Your Integration](#testing-your-integration)
+
+## Getting Started
+
+### Environment Setup
+
+Loopay provides two environments for your integration:
+
+#### Test/Demo Environment
+
+- **Dashboard URL:** demo.loopay.com
+- **API Base URL:** https://api.loopay.com
+- Use this environment for development and testing.
+
+#### Production Environment
+
+- **Dashboard URL:** app.loopay.com
+- **API Base URL:** https://v1.api.loopay.com
+- Use this environment for live transactions.
+
+### Prerequisites
+
+Before you can start using the Loopay API, you’ll need:
+
+- A company account created by our commercial team
+- A user account linked to your company
+- At least one product assigned to your company (this creates a companyProduct)
+
+## Understanding Key Concepts
+
+### CompanyProduct: Your Digital Wallet
+
+Think of a `companyProduct` as your digital wallet within the Loopay system. This is where your money lives and where all transactions originate.
+
+- **Purpose:** Acts as the connection between your company and a specific Loopay product
+- **Balance:** Shows how much money you have available for payouts
+- **Multiple Wallets:** You can have several `companyProducts`, each linked to different products with varying processing times and fees
+- **Transaction Hub:** All your payins (money coming in) and payouts (money going out) flow through these wallets
+
+### The Payout Lifecycle
+
+Every payout goes through these stages:
+
+#### Creation (state: `received`, active: `false`)
+
+- You create the payout via API or dashboard.
+- The payout exists but hasn’t been processed yet.
+- No money has been deducted from your balance.
+
+#### Signing (state: `received`, active: `true`)
+
+- The payout is signed (either manually or automatically).
+- Your balance is reduced by the payout amount plus fees.
+- The payout is now committed and sent to our operations team.
+
+#### Processing (state: `onHold`, active: `true`)
+
+- Our operations team receives the payout.
+- The actual bank transfer process begins.
+- The payout is being processed by the banking system.
+
+#### Completion (state: `DELIVERED` or `REJECTED`, active: `true`)
+
+- The transfer is either successful (`DELIVERED`) or failed (`REJECTED`).
+- You receive the final status of your payout.
+
+## Authentication
+
+### Step 1: Obtain Your Access Token
+
+All API requests require authentication using a Bearer token.
+
+- **Endpoint:** `POST /login`
+- **Parameters:**
+  - `email`: The email address associated with your company account
+  - `password`: Your account password
+
+#### Example Request
+
+```bash
+curl -X POST "https://api.loopay.com/login?email=your-email@company.com&password=your-password"
+```
